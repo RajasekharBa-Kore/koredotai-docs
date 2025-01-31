@@ -24,7 +24,7 @@ jobs:
         id: pages
         uses: actions/configure-pages@v4 # Update to latest version
       - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v4
+        uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
