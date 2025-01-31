@@ -42,16 +42,15 @@ jobs:
           source: ./
           destination: ./_site
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v2  # ✅ Correct action for GitHub Pages
         with:
-          name: site-artifact
-          path: ./_site  # Ensure this is the correct path to your built site
+          path: ./_site  # ✅ Ensure this matches the build output folder
 
   # Deployment job
   deploy:
     environment:
       name: github-pages
-      url: ${{steps.deployment.outputs.page_url}}
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
     steps:
