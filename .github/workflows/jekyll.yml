@@ -21,19 +21,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3
+      
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
+      
+      - name: Verify build output  # ✅ Debugging step
+        run: ls -l ./_site  # Check if _site contains files
+
       - name: Upload artifact
-        uses: actions/upload-artifact@v4  # ✅ Using v4 to avoid deprecation issues
+        uses: actions/upload-artifact@v4
         with:
-          name: github-pages  # ✅ Make sure this matches the deploy step
-          path: ./_site  # ✅ Ensure this matches your built site
+          name: github-pages  # ✅ This name must match the deploy step
+          path: ./_site  # ✅ Ensure this is the correct path to built files
 
   # Deployment job
   deploy:
@@ -44,10 +50,13 @@ jobs:
     needs: build
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v4  # ✅ Needed to get the uploaded artifact
+        uses: actions/download-artifact@v4
         with:
-          name: github-pages  # ✅ Must match the upload step
-          path: ./_site  # ✅ Ensures it is placed correctly for deployment
+          name: github-pages  # ✅ This must match the upload step
+          path: ./_site  # ✅ Ensures correct placement
+
+      - name: Verify downloaded files  # ✅ Debugging step
+        run: ls -l ./_site  # Check if files exist before deployment
 
       - name: Deploy to GitHub Pages
         id: deployment
