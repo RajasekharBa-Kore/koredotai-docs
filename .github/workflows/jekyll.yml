@@ -42,7 +42,10 @@ jobs:
           source: ./
           destination: ./_site
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-artifact
+          path: ./_site  # Ensure this is the correct path to your built site
 
   # Deployment job
   deploy:
